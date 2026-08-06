@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="memory-vault",
-    version="1.0.0",
+    version="1.0.1",
     description="Multi-device backup and sync tool for Linux with Rclone and Restic",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
@@ -15,7 +15,11 @@ setup(
         "Source Code": "https://github.com/Daniquir/memory-vault",
     },
     license="MIT",
-    packages=find_packages(),
+    # vault.py is the console entry module; must be listed explicitly.
+    # Modern editable installs (PEP 660) no longer put the project root on
+    # sys.path, so omitting py_modules breaks `vault` on Fedora/newer pip.
+    py_modules=["vault"],
+    packages=find_packages(exclude=["tests", "tests.*"]),
     include_package_data=True,
     install_requires=[
         "customtkinter>=5.2.0",
@@ -56,6 +60,8 @@ setup(
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
+        "Programming Language :: Python :: 3.14",
         "Topic :: System :: Archiving :: Backup",
         "Topic :: System :: Filesystems",
         "Topic :: Utilities",

@@ -32,14 +32,19 @@ fi
 print_info "The Memory Vault Uninstallation Script"
 echo ""
 
-# Remove vault binary
-print_info "Removing vault binary..."
-if [ -f "/usr/local/bin/vault" ]; then
-    sudo rm -f /usr/local/bin/vault
-    print_info "vault binary removed from /usr/local/bin/vault"
-else
-    print_warn "vault binary not found at /usr/local/bin/vault"
+# Remove vault console script / package
+print_info "Removing vault package and console script..."
+if python3 -m pip show memory-vault &> /dev/null; then
+    python3 -m pip uninstall --yes memory-vault 2>/dev/null || print_warn "Could not uninstall memory-vault via pip"
+    print_info "memory-vault Python package removed"
 fi
+
+for vault_bin in "/usr/local/bin/vault" "$HOME/.local/bin/vault"; do
+    if [ -f "$vault_bin" ] || [ -L "$vault_bin" ]; then
+        rm -f "$vault_bin" 2>/dev/null || sudo rm -f "$vault_bin"
+        print_info "Removed $vault_bin"
+    fi
+done
 
 # Remove application menu entry
 print_info "Removing application menu entry..."
@@ -83,7 +88,7 @@ read -p "Do you want to remove Python dependencies (customtkinter, pystray, Pill
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
     print_info "Removing Python dependencies..."
-    pip3 uninstall --yes customtkinter pystray Pillow boto3 2>/dev/null || print_warn "Some Python dependencies could not be removed"
+    python3 -m pip uninstall --yes customtkinter pystray Pillow boto3 2>/dev/null || print_warn "Some Python dependencies could not be removed"
     print_info "Python dependencies removed"
 else
     print_info "Python dependencies preserved"

@@ -5,19 +5,11 @@ import sys
 import os
 import fcntl
 
-# Add src directory to path when running from repository
+# When running from the repository (not as an installed package), put the
+# project root on sys.path so `import src.*` resolves correctly.
 script_dir = os.path.dirname(os.path.abspath(__file__))
-src_dir = os.path.join(script_dir, "src")
-
-if os.path.exists(src_dir):
-    sys.path.insert(0, src_dir)
-
-try:
-    from src.cli.commands import main
-    from src.gui.main_window import launch_gui
-except ImportError:
-    print("Error: Cannot find The Memory Vault modules. Please install the package.")
-    sys.exit(1)
+if os.path.isdir(os.path.join(script_dir, "src")) and script_dir not in sys.path:
+    sys.path.insert(0, script_dir)
 
 
 def _check_single_instance():
@@ -61,9 +53,24 @@ def main_entry():
         # Store lock fd in global to keep it alive
         global _lock_fd
         _lock_fd = lock_fd
-        
+
+        try:
+            from src.gui.main_window import launch_gui
+        except ImportError as exc:
+            print("Error: Cannot load The Memory Vault GUI.")
+            print(f"Details: {exc}")
+            print("On Fedora/RHEL install: sudo dnf install python3-tkinter")
+            print("On Debian/Ubuntu install: sudo apt install python3-tk")
+            sys.exit(1)
+
         launch_gui()
     else:
+        try:
+            from src.cli.commands import main
+        except ImportError as exc:
+            print("Error: Cannot find The Memory Vault modules. Please install the package.")
+            print(f"Details: {exc}")
+            sys.exit(1)
         # Run CLI
         sys.exit(main())
 

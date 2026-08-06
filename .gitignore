@@ -69,6 +69,8 @@ vault.egg-info/
 
 # Configuration with sensitive data
 .config/memory-vault/config.json
+config.json
+.cortex/
 
 # Temporary files
 *.tmp
