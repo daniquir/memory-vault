@@ -1042,7 +1042,8 @@ Click OK to start using The Memory Vault."""
                     hostname, device_config, last_snap, sync_folders
                 ))
             except Exception as e:
-                self.after(0, lambda: self.status_label.configure(text=f"Error: {str(e)}"))
+                err = str(e)
+                self.after(0, lambda err=err: self.status_label.configure(text=f"Error: {err}"))
         
         thread = threading.Thread(target=check_thread, daemon=True)
         thread.start()
@@ -1285,8 +1286,9 @@ Click OK to start using The Memory Vault."""
                 self.after(0, lambda: self.snap_progress_label.pack_forget())
             
         except Exception as e:
-            self.after(0, lambda: self.snap_status_label.configure(text=f"Error: {str(e)}"))
-            self._log("ERROR", f"Error creating snapshot: {str(e)}")
+            err = str(e)
+            self.after(0, lambda err=err: self.snap_status_label.configure(text=f"Error: {err}"))
+            self._log("ERROR", f"Error creating snapshot: {err}")
         finally:
             # Re-enable button and hide progress bar
             self.after(0, lambda: self.snap_button.configure(state="normal", text="Create Snapshot"))
@@ -1721,11 +1723,12 @@ Click OK to start using The Memory Vault."""
                 )
             
         except Exception as e:
-            self.after(0, lambda: self.status_label.configure(text=f"Error: {str(e)}"))
-            self._log("ERROR", f"Error syncing folders: {str(e)}")
+            err = str(e)
+            self.after(0, lambda err=err: self.status_label.configure(text=f"Error: {err}"))
+            self._log("ERROR", f"Error syncing folders: {err}")
             self._send_notification(
                 "Memory Vault Error",
-                f"Sync failed: {str(e)}",
+                f"Sync failed: {err}",
                 urgency="critical"
             )
         finally:
@@ -2284,7 +2287,6 @@ def launch_gui():
     tray = TrayIcon()
     
     def hide_window():
-        global _app_window
         if _app_window:
             _app_window.withdraw()  # Hide window
         tray._update_icon()

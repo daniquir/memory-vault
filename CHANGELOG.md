@@ -13,6 +13,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Package install on Fedora and other systems with modern pip (PEP 660): include `vault` as a `py_module` so the `vault` console entry point resolves after editable install
 - Lazy-load CLI/GUI imports so `vault` CLI works even when tkinter is missing
 - Clearer GUI error when tkinter is not installed (Fedora: `python3-tkinter`, Debian: `python3-tk`)
+- CI flake8 failures (`Path` import, lambda exception capture, unused `global`)
+- `test_is_configured` aligned with sync/vault bucket configuration API
+- Drop unsupported Python 3.7/3.8 from GitHub Actions matrix (ubuntu-latest)
 
 ### Changed
 - Installation script now supports Fedora/RHEL (`dnf`) and Arch (`pacman`) in addition to Debian/Ubuntu

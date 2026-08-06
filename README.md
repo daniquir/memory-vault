@@ -1,6 +1,6 @@
 # The Memory Vault (El Baúl de los Recuerdos) 📦
 
-[![Python Version](https://img.shields.io/badge/python-3.7%2B-blue.svg)](https://www.python.org/downloads/)
+[![Python Version](https://img.shields.io/badge/python-3.9%2B-blue.svg)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Linux](https://img.shields.io/badge/os-linux-orange.svg)](https://www.linux.org/)
 
@@ -63,7 +63,7 @@ The "Lean" approach simplifies the system:
 
 ### Prerequisites
 
-- Python 3.7+
+- Python 3.9+
 - Linux (Debian/Ubuntu, Fedora/RHEL, or Arch-based)
 - Wasabi S3 account
 
@@ -359,7 +359,7 @@ Tested on:
 - Void Linux
 
 Should work on any Linux distribution with:
-- Python 3.7+
+- Python 3.9+
 - FUSE support
 - Package manager (apt, dnf, or pacman)
 - Tkinter for the GUI (`python3-tk` / `python3-tkinter`)
