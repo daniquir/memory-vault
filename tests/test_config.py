@@ -64,12 +64,15 @@ class TestConfig:
     def test_is_configured(self, mock_config):
         """Test configuration status check."""
         assert not mock_config.is_configured()
-        
-        mock_config.set("storage.bucket", "test")
+
+        # Sync-only config is enough for is_configured()
+        mock_config.set("storage.sync_bucket", "test-sync")
         mock_config.set("storage.access_key", "key")
         mock_config.set("storage.secret_key", "secret")
-        
+
         assert mock_config.is_configured()
+        assert mock_config.is_sync_configured()
+        assert not mock_config.is_snapshots_configured()
     
     def test_device_config(self, mock_config):
         """Test device-specific configuration."""
