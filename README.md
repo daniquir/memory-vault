@@ -64,7 +64,7 @@ The "Lean" approach simplifies the system:
 ### Prerequisites
 
 - Python 3.7+
-- Linux system (Debian-based recommended)
+- Linux (Debian/Ubuntu, Fedora/RHEL, or Arch-based)
 - Wasabi S3 account
 
 ### Automated Installation
@@ -79,31 +79,28 @@ cd memory-vault
 ```
 
 The installation script will:
-- Check and install Python 3 and pip
+- Detect apt, dnf, or pacman and install system dependencies
+- Check and install Python 3, pip, setuptools, and tkinter (required for the GUI)
 - Install Python dependencies (customtkinter, pystray, Pillow, boto3)
-- Install rclone
-- Install restic
-- Install fuse3
-- Install trash-cli
+- Install rclone and restic (from distro packages when available)
+- Install fuse3 and trash-cli
 - Create configuration directory at `~/.config/memory-vault/`
-- Install the `vault` command to `/usr/local/bin/`
+- Install the `vault` command (typically to `~/.local/bin/vault`)
+- Verify that `vault` imports and runs
 - Optionally add GUI to autostart
 
 ### Manual Installation
 
 ```bash
 # Install Python dependencies
-pip3 install -r requirements.txt
+python3 -m pip install --user --break-system-packages -r requirements.txt
+python3 -m pip install --user --break-system-packages -e .
 
 # Install system dependencies (Debian/Ubuntu)
-sudo apt-get install rclone restic fuse3 trash-cli
+sudo apt-get install rclone restic fuse3 trash-cli python3-tk
 
-# Make the entry point executable
-chmod +x vault.py
-
-# Copy to system path (optional)
-sudo cp vault.py /usr/local/bin/vault
-sudo chmod +x /usr/local/bin/vault
+# Install system dependencies (Fedora/RHEL)
+sudo dnf install rclone restic fuse3 trash-cli python3-tkinter
 ```
 
 ## Quick Start
@@ -317,7 +314,17 @@ Check network connectivity to Wasabi S3.
 
 Ensure customtkinter is installed:
 ```bash
-pip3 list | grep customtkinter
+python3 -m pip list | grep customtkinter
+```
+
+On Fedora/RHEL, tkinter is a separate package:
+```bash
+sudo dnf install python3-tkinter
+```
+
+On Debian/Ubuntu:
+```bash
+sudo apt install python3-tk
 ```
 
 Check for X11/Wayland display issues.
@@ -345,6 +352,7 @@ The uninstall script will:
 Tested on:
 - Debian 11/12
 - Ubuntu 20.04/22.04/24.04
+- Fedora 40+
 - Devuan
 - MX Linux
 - AntiX
@@ -354,6 +362,7 @@ Should work on any Linux distribution with:
 - Python 3.7+
 - FUSE support
 - Package manager (apt, dnf, or pacman)
+- Tkinter for the GUI (`python3-tk` / `python3-tkinter`)
 
 ## License
 

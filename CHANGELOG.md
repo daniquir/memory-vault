@@ -7,22 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added
-- Initial public release
-- Hybrid sync architecture with Rclone and Restic
-- Multi-device support with hostname-aware snapshots
-- RM-Shield protection against accidental deletion
-- Bilingual support (English/Spanish)
-- GUI with system tray integration
-- Systemd-free compatibility (works with OpenRC, runit, SysVinit)
-- Two-bucket "Lean" architecture for optimal cost efficiency
-- Auto-sync functionality
-- Snapshot management with configurable retention policy
+## [1.0.1] - 2026-08-06
 
-### Security
-- AES-256 encryption for all snapshots
-- Optional Object Lock (WORM mode) for vault bucket
-- Secure credential storage in local configuration
+### Fixed
+- Package install on Fedora and other systems with modern pip (PEP 660): include `vault` as a `py_module` so the `vault` console entry point resolves after editable install
+- Lazy-load CLI/GUI imports so `vault` CLI works even when tkinter is missing
+- Clearer GUI error when tkinter is not installed (Fedora: `python3-tkinter`, Debian: `python3-tk`)
+
+### Changed
+- Installation script now supports Fedora/RHEL (`dnf`) and Arch (`pacman`) in addition to Debian/Ubuntu
+- Installer installs tkinter/setuptools when needed, prefers distro packages for rclone/restic, downloads restic via curl/wget to a temp dir, and verifies `vault` after install
+- Uninstaller removes the pip `memory-vault` package and `~/.local/bin/vault`
 
 ## [1.0.0] - 2026-04-27
 
@@ -37,3 +32,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync folder management
 - Activity logging
 - System tray icon with status indicators
+- Hybrid sync architecture with Rclone and Restic
+- Multi-device support with hostname-aware snapshots
+- RM-Shield protection against accidental deletion
+- Bilingual support (English/Spanish)
+- Systemd-free compatibility (works with OpenRC, runit, SysVinit)
+- Two-bucket "Lean" architecture for optimal cost efficiency
+- Auto-sync functionality
+- Snapshot management with configurable retention policy
+
+### Security
+- AES-256 encryption for all snapshots
+- Optional Object Lock (WORM mode) for vault bucket
+- Secure credential storage in local configuration
