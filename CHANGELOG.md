@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Docker example for **snapshot-only** backups (`examples/docker-snapshots/`) and guide [`docs/DOCKER_SNAPSHOTS.md`](docs/DOCKER_SNAPSHOTS.md): run memory-vault + Restic in a container without installing binaries on the host
+
 ## [1.0.1] - 2026-08-06
 
 ### Fixed
