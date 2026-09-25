@@ -1,5 +1,5 @@
-# memory-vault — solo snapshots (Restic) en Docker
-# No instala restic en el SO del host. Sin GUI.
+# memory-vault — snapshot-only (Restic) in Docker.
+# Does not install restic on the host OS. No GUI.
 FROM python:3.12-slim-bookworm
 
 ARG RESTIC_VERSION=0.17.3
@@ -15,7 +15,7 @@ WORKDIR /opt/memory-vault
 RUN git clone --depth 1 https://github.com/daniquir/memory-vault.git . \
  && git rev-parse --short HEAD > /opt/memory-vault/.git-commit
 
-# CLI: boto3 basta. Sin dependencias de GUI.
+# CLI only: boto3 is enough. No GUI dependencies.
 RUN pip install --no-cache-dir boto3 \
  && pip install --no-cache-dir --no-deps .
 

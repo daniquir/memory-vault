@@ -1,6 +1,6 @@
 #!/bin/sh
-# memory-vault en modo solo-snap (Restic). Sin sync Rclone.
-# Secretos por entorno. Monta BACKUP_PATH (por defecto /data/backup-src).
+# memory-vault in snapshot-only mode (Restic). No Rclone sync.
+# Secrets come from the environment. Mount BACKUP_PATH (default /data/backup-src).
 set -eu
 
 CONFIG_DIR="${HOME}/.config/memory-vault"
