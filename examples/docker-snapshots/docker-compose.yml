@@ -1,0 +1,39 @@
+# Example: encrypted Restic snapshots with memory-vault in Docker (no host install).
+# Copy this folder, set env vars, point the bind mount at the data you want to back up.
+#
+#   export WASABI_ACCESS_KEY=...
+#   export WASABI_SECRET_KEY=...
+#   export RESTIC_PASSWORD=...   # client-side encryption; store safely
+#   export WASABI_BUCKET=my-restic-bucket
+#   docker compose up -d --build
+#
+# keep_last=N means N recoverable versions with deduplication — not N full copies.
+
+name: memory-vault-snapshots
+
+services:
+  memory-vault-snapshots:
+    build: .
+    image: memory-vault-snapshots:local
+    container_name: memory-vault-snapshots
+    hostname: docker-host
+    restart: unless-stopped
+    environment:
+      TZ: UTC
+      HOSTNAME_TAG: docker-host
+      BACKUP_PATH: /data/backup-src
+      WASABI_BUCKET: ${WASABI_BUCKET}
+      WASABI_REGION: ${WASABI_REGION:-eu-west-2}
+      WASABI_ACCESS_KEY: ${WASABI_ACCESS_KEY}
+      WASABI_SECRET_KEY: ${WASABI_SECRET_KEY}
+      RESTIC_PASSWORD: ${RESTIC_PASSWORD}
+      KEEP_LAST: ${KEEP_LAST:-3}
+      SNAP_HOUR: ${SNAP_HOUR:-3}
+      HOME: /data
+    volumes:
+      - vault-data:/data
+      # Read-only source to snapshot (change to your path):
+      - /path/to/your/data:/data/backup-src:ro
+
+volumes:
+  vault-data:

@@ -16,6 +16,7 @@ It combines the convenience of cloud sync (Rclone) with the bulletproof security
 - 🔧 **Systemd-free:** Runs on any Init system (OpenRC, runit, SysVinit).
 - 🔒 **WORM Immutability:** Optional Object Lock for bulletproof data protection.
 - 🖥️ **GUI & CLI:** Both graphical and command-line interfaces available.
+- 🐳 **Docker snapshots:** Run snapshot-only backups in a container (no host install of restic/rclone). See [`docs/DOCKER_SNAPSHOTS.md`](docs/DOCKER_SNAPSHOTS.md) and [`examples/docker-snapshots/`](examples/docker-snapshots/).
 
 ## Architecture
 
@@ -377,3 +378,4 @@ Contributions are welcome! Please read the [CONTRIBUTING.md](CONTRIBUTING.md) fi
 For issues and questions:
 - GitHub Issues: https://github.com/Daniquir/memory-vault/issues
 - Documentation: See `docs/` directory
+- Docker (snapshots only): [`docs/DOCKER_SNAPSHOTS.md`](docs/DOCKER_SNAPSHOTS.md)
